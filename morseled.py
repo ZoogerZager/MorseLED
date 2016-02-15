@@ -42,7 +42,7 @@ with open ('morse_dictionary.txt', 'r') as data:
 # Get the user's input and clean it.    
 user_input = input('Enter a string: ')
 # This isn't working with special chars in the middle of letters
-user_input = user_input.strip('!@#$%^&*()')
+user_input = user_input.strip('!@#$%^&*()":;?/,.<>}]{[-_`~')
 user_input = user_input.upper()
 
 # Print the cleaned and translated user_input
@@ -54,7 +54,6 @@ print(morse_code)
 dot_time = .3
 dash_time = dot_time * 3
 space_time = dot_time * 7
-
 
 # Blinking Logic and Output
 try:
@@ -75,7 +74,3 @@ try:
             sleep(dash_time) # Time between letters of the same word.
 finally:
     GPIO.cleanup()
-                    
-                 
-            
-
