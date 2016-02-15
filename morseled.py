@@ -50,23 +50,29 @@ print(user_input)
 morse_code = morse_translate(user_input)
 print(morse_code)
 
+# Customize the speed of the output in seconds. WARNING: only edit dot_time
+dot_time = .5
+dash_time = dot_time * 3
+space_time = dot_time * 7
+
+
 # Blinking Logic and Output
 try:
     for letter in morse_code:
         if letter == 'space':
-            sleep(7) # Time between words.
+            sleep(space_time) # Time between words.
         else:
             for blip in letter:
                 if blip == '.':
                     GPIO.output(LEDPin, True)
-                    sleep(1) # Length of Dot
+                    sleep(dot_time) # Length of Dot
                     GPIO.output(LEDPin, False)
                 if blip == '-':
                     GPIO.output(LEDPin, True)
-                    sleep(3) # Length of Dash
+                    sleep(dash_time) # Length of Dash
                     GPIO.output(LEDPin, False)
-                sleep(1) # Time between each blip of the same letter.    
-            sleep(3) # Time between letters of the same word.
+                sleep(dot_time) # Time between each blip of the same letter.    
+            sleep(dash_time) # Time between letters of the same word.
 finally:
     GPIO.cleanup()
                     
