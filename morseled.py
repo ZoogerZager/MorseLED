@@ -62,7 +62,7 @@ try:
                     sleep(1) # Length of Dot
                     GPIO.output(LEDPin, False)
                 if blip == '-':
-                    GPIO.ouput(LEDPin, True)
+                    GPIO.output(LEDPin, True)
                     sleep(3) # Length of Dash
                     GPIO.output(LEDPin, False)
                 sleep(1) # Time between each blip of the same letter.    
