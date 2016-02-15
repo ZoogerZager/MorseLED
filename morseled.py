@@ -51,7 +51,7 @@ morse_code = morse_translate(user_input)
 print(morse_code)
 
 # Customize the speed of the output in seconds. WARNING: only edit dot_time
-dot_time = .5
+dot_time = .3
 dash_time = dot_time * 3
 space_time = dot_time * 7
 
