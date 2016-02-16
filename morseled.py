@@ -42,7 +42,7 @@ with open ('morse_dictionary.txt', 'r') as data:
 # Get the user's input and clean it.    
 user_input = input('Enter a string: ')
 # This isn't working with special chars in the middle of letters
-user_input = user_input.strip('!@#$%^&*()":;?/,.<>}]{[-_`~')
+user_input = user_input.strip('!@#$%^&*()";/<>}]{[_`~')
 user_input = user_input.upper()
 
 # Print the cleaned and translated user_input
