@@ -20,7 +20,7 @@ def morse_translate(input_text):
     try:
         for letter in input_text:
             if letter == ' ':
-                translated_text.append('space') # spaces = 7 dashes
+                translated_text.append('space')
             else:    
                 translated_text.append(morse_dict[letter])
     except(KeyError):
@@ -36,13 +36,12 @@ GPIO.setup(LEDPin, GPIO.OUT)
 morse_dict = {}
 with open ('morse_dictionary.txt', 'r') as data:
     for line in data:
-        letter = line.rsplit()
-        morse_dict[letter[0]] = letter[1]
+        character = line.rsplit()
+        morse_dict[character[0]] = character[1]
 
-# Get the user's input and clean it.    
+# Get the user's input, clean it, and uppercase it.    
 user_input = input('Enter a string: ')
-# This isn't working with special chars in the middle of letters
-user_input = user_input.strip('!@#$%^&*()";/<>}]{[_`~')
+user_input = user_input.strip('!@#$%^&*()";/<>}]{[_`~ ')
 user_input = user_input.upper()
 
 # Print the cleaned and translated user_input
@@ -51,7 +50,7 @@ morse_code = morse_translate(user_input)
 print(morse_code)
 
 # Customize the speed of the output in seconds. WARNING: only edit dot_time
-dot_time = .3
+dot_time = .25
 dash_time = dot_time * 3
 space_time = dot_time * 7
 
@@ -61,7 +60,9 @@ try:
         if letter == 'space':
             sleep(space_time) # Time between words.
         else:
+            sleep(dash_time) # Time between letters of the same word.
             for blip in letter:
+                sleep(dot_time) # Time between each blip of the same letter. 
                 if blip == '.':
                     GPIO.output(LEDPin, True)
                     sleep(dot_time) # Length of Dot
@@ -70,7 +71,5 @@ try:
                     GPIO.output(LEDPin, True)
                     sleep(dash_time) # Length of Dash
                     GPIO.output(LEDPin, False)
-                sleep(dot_time) # Time between each blip of the same letter.    
-            sleep(dash_time) # Time between letters of the same word.
 finally:
     GPIO.cleanup()
