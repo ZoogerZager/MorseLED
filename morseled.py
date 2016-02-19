@@ -64,14 +64,6 @@ def Console_output():
                 if blip == '-':
                     print('-')
                     sleep(dash_time) # Length of Dash
-    
-    
-# Initialize the Morse Dictionary and get the key, value pairs.
-morse_dict = {}
-with open ('morse_dictionary.txt', 'r') as data:
-    for line in data:
-        character = line.rsplit()
-        morse_dict[character[0]] = character[1]
 
 ## Configuration
 output_GPIO = False
@@ -80,11 +72,18 @@ dot_time = .25 # Customize output speed
 dash_time = dot_time * 3
 space_time = dot_time * 7
 
-# Run GPIO setup.
+# Run GPIO setup if necessary.
 if output_GPIO: 
     LEDPin = 22
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup(LEDPin, GPIO.OUT)  
+    GPIO.setup(LEDPin, GPIO.OUT)                      
+    
+# Initialize the Morse Dictionary and get the key, value pairs.
+morse_dict = {}
+with open ('morse_dictionary.txt', 'r') as data:
+    for line in data:
+        character = line.rsplit()
+        morse_dict[character[0]] = character[1]
 
 # Get the user's input, clean it, and uppercase it.    
 user_input = input('Enter a string: ')
