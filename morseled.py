@@ -10,7 +10,7 @@ Rules of Morse Code from https://en.wikipedia.org/wiki/Morse_code:
 5. The space between words is seven units.
 
 """
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
 from time import sleep
 
 
@@ -45,26 +45,25 @@ def GPIO_output():
                         GPIO.output(LEDPin, True)
                         sleep(dash_time) # Length of Dash
                         GPIO.output(LEDPin, False)
+                    
     finally:
         GPIO.cleanup()
         
 def Console_output():
     """Outputs the Morse code as dots and dashes in the Console"""
-            for letter in morse_code:
-            if letter == 'space':
-                sleep(space_time) # Time between words.
-            else:
-                sleep(dash_time) # Time between letters of the same word.
-                for blip in letter:
-                    sleep(dot_time) # Time between each blip of the same letter. 
-                    if blip == '.':
-                        GPIO.output(LEDPin, True)
-                        sleep(dot_time) # Length of Dot
-                        GPIO.output(LEDPin, False)
-                    if blip == '-':
-                        GPIO.output(LEDPin, True)
-                        sleep(dash_time) # Length of Dash
-                        GPIO.output(LEDPin, False)
+    for letter in morse_code:
+        if letter == 'space':
+            sleep(space_time) # Time between words.
+        else:
+            sleep(dash_time) # Time between letters of the same word.
+            for blip in letter:
+                sleep(dot_time) # Time between each blip of the same letter. 
+                if blip == '.':
+                    print('.')
+                    sleep(dot_time) # Length of Dot
+                if blip == '-':
+                    print('-')
+                    sleep(dash_time) # Length of Dash
     
     
 # Initialize the Morse Dictionary and get the key, value pairs.
@@ -74,9 +73,8 @@ with open ('morse_dictionary.txt', 'r') as data:
         character = line.rsplit()
         morse_dict[character[0]] = character[1]
 
-        
 ## Configuration
-output_GPIO = True
+output_GPIO = False
 output_Console = True
 dot_time = .25 # Customize output speed
 dash_time = dot_time * 3
@@ -96,13 +94,10 @@ user_input = user_input.upper()
 # Print the cleaned and translated user_input
 print(user_input)
 morse_code = morse_translate(user_input)
-print(morse_code)
+print('Morse Code: ', morse_code)
 
-
+# Output Logic
 if output_GPIO:
     GPIO_output()
 if output_Console:
     Console_output()
-
-
-# Blinking Logic and Output
