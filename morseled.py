@@ -10,7 +10,7 @@ Rules of Morse Code from https://en.wikipedia.org/wiki/Morse_code:
 5. The space between words is seven units.
 
 """
-# import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 from time import sleep
 
 
@@ -26,6 +26,7 @@ def morse_translate(input_text):
     except(KeyError):
         pass
     return translated_text
+    
     
 def GPIO_output():
     """Handles the default GPIO Blinking Logic and Output"""
@@ -45,9 +46,9 @@ def GPIO_output():
                         GPIO.output(LEDPin, True)
                         sleep(dash_time) # Length of Dash
                         GPIO.output(LEDPin, False)
-                    
     finally:
         GPIO.cleanup()
+        
         
 def Console_output():
     """Outputs the Morse code as dots and dashes in the Console"""
@@ -64,15 +65,16 @@ def Console_output():
                 if blip == '-':
                     print('-')
                     sleep(dash_time) # Length of Dash
+                    
 
 ## Configuration
-output_GPIO = False
+output_GPIO = True
 output_Console = True
-dot_time = .25 # Customize output speed
+dot_time = .20 # Customize output speed (seconds)
 dash_time = dot_time * 3
 space_time = dot_time * 7
 
-# Run GPIO setup if necessary.
+# Run GPIO set up if necessary.
 if output_GPIO: 
     LEDPin = 22
     GPIO.setmode(GPIO.BCM)
@@ -85,13 +87,11 @@ with open ('morse_dictionary.txt', 'r') as data:
         character = line.rsplit()
         morse_dict[character[0]] = character[1]
 
-# Get the user's input, clean it, and uppercase it.    
+# Get the user's input, clean it, and uppercase it. Print it.
 user_input = input('Enter a string: ')
 user_input = user_input.strip('!@#$%^&*()";/<>}]{[_`~ ')
 user_input = user_input.upper()
-
-# Print the cleaned and translated user_input
-print(user_input)
+print('User Input: ', user_input)
 morse_code = morse_translate(user_input)
 print('Morse Code: ', morse_code)
 
